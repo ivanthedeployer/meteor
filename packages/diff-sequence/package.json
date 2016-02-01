@@ -1,6 +1,6 @@
 {
   "name": "meteor-standalone-diff-sequence",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Meteor group's diff-sequence packaged for NPM",
   "main": "diff.js",
   "scripts": {

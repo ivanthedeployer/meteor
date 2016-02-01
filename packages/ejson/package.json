@@ -1,6 +1,6 @@
 {
   "name": "meteor-standalone-ejson",
-  "version": "1.0.83",
+  "version": "1.0.84",
   "description": "Standalone EJSON package for NPM ",
   "main": "ejson.js",
   "scripts": {

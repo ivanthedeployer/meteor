@@ -1,6 +1,6 @@
 {
   "name": "meteor-standalone-geojson-utils",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "NPM packaging for MDG's geojson-utils",
   "main": "geojson-utils.js",
   "scripts": {

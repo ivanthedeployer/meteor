@@ -1,6 +1,6 @@
 {
   "name": "meteor-standalone-base64",
-  "version": "1.0.51",
+  "version": "1.0.52",
   "description": "Standalone NPM package for Meteor group base64",
   "main": "base64.js",
   "scripts": {

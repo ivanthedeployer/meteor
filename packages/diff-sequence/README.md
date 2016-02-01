@@ -1,0 +1,1 @@
+Internal Meteor package minimally modified to be installable with NPM to support [meteor-standalone-react-mixin](https://www.npmjs.com/package/meteor-standalone-react-mixin)
