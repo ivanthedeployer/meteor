@@ -1,0 +1,1 @@
+Standalone NPM version of MDG's internal package mongo-id in support of the [React Meteor Standalone Mixin](https://www.npmjs.com/package/meteor-standalone-react-mixin)

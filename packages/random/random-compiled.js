@@ -10,13 +10,12 @@
 // that to construct hex string.
 var global = Function('return this')();
 var Meteor = global.Meteor || {};
-var Npm = global.Npm || { Npm: function Npm() {
-    throw new Error('You cannot use NPM under these circumstances');
-  } };
 
 var Random;
 
+/*
 if (Meteor.isServer) var nodeCrypto = Npm.require('crypto');
+*/
 
 // see http://baagoe.org/en/wiki/Better_random_numbers_for_javascript
 // for a full discussion and Alea implementation.

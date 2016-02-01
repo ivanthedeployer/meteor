@@ -1,6 +1,6 @@
 {
   "name": "meteor-standalone-ordered-dict",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "NPM packaging for MDG's ordered-dict",
   "main": "ordered_dict.js",
   "scripts": {

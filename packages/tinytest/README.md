@@ -1,5 +1,7 @@
 # TinyTest
 
+### This version of tinytest is a minimally modified fork of MDG's original.  It was built to work with NPM to support the other standalone packages.  This way MDG's original tests can be run on standalone packages without the Meteor environment.  Mainly built to support the [React Meteor Standalone Mixin](https://www.npmjs.com/package/meteor-standalone-react-mixin) ###
+
 After reading this, you'll know:
 
 1. What Tinytest is used for.

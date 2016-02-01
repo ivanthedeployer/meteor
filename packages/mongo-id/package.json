@@ -1,6 +1,6 @@
 {
   "name": "meteor-standalone-mongo-id",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "NPM package for meteor group mongo-id package",
   "main": "id.js",
   "scripts": {

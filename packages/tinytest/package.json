@@ -1,6 +1,6 @@
 {
   "name": "meteor-standalone-npm-tinytest",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Meteor's Tinytest packaged for NPM so other standalone packages can run their regular test suite",
   "main": "tinytest.js",
   "scripts": {
