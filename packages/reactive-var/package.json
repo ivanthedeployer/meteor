@@ -1,6 +1,6 @@
 {
   "name": "meteor-standalone-reactive-var",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "NPM packaging for MDG's reactive-var package",
   "main": "reactive-var.js",
   "scripts": {

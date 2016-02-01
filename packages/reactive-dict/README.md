@@ -1,5 +1,7 @@
 # reactive-dict
 
+#### This package has been minimally modified to work with NPM in support of [React Meteor Standalone Mixin](https://www.npmjs.com/package/meteor-standalone-react-mixin) ####
+
 This package provide `ReactiveDict`, a general-purpose reactive
 datatype for use with
 [tracker](https://atmospherejs.com/meteor/tracker). It provides all of

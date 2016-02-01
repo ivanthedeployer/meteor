@@ -1,5 +1,7 @@
 # Meteor Tracker
 
+This has been minimally modified from MDG's original to work with NPM in support of the [React Meteor Standalone Mixin](https://www.npmjs.com/package/meteor-standalone-react-mixin)
+
 Meteor Tracker is an incredibly tiny (~1k) but incredibly powerful
 library for **transparent reactive programming** in JavaScript. (It
 was previously called Deps.)
