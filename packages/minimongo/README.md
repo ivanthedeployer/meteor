@@ -1,5 +1,16 @@
 # Minimongo
 
+This version of Minimongo is minimally modified to be installable and testable using only NPM.  It was modified to support the [React Meteor Standalone Mixin](https://www.npmjs.com/package/meteor-standalone-react-mixin)
+
+Exposes the following with require('meteor-standalone-minimongo')
+* Minimongo
+* LocalCollection
+* MinimongoTest
+* ReactiveDict
+* ReactiveVar,
+* Tracker
+*  EJSON
+
 `minimongo` is reimplementation of (almost) the entire MongoDB API, against an
 in-memory JavaScript database. It is like a MongoDB emulator that runs inside
 your web browser. You can insert data into it and search, sort, and update that

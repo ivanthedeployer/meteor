@@ -1,1 +1,1 @@
-This is an internal Meteor package.
+This is an internal Meteor package modified for use with NPM and support of the [React Meteor Standalone Mixin](https://www.npmjs.com/package/meteor-standalone-react-mixin)

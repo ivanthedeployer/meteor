@@ -63,3 +63,5 @@ var fns = {
 
 if(global.LocalCollection){getFns(global.LocalCollection);}
 
+module.exports = getFns;
+

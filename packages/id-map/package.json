@@ -1,6 +1,6 @@
 {
   "name": "meteor-standalone-id-map",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "NPM package for meteor group's id-map",
   "main": "id-map.js",
   "directories": {
