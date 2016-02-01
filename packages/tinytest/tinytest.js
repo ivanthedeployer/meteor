@@ -1,3 +1,11 @@
+var global = Function('return this')();
+var _ = require('underscore');
+var Meteor = require('meteor-standalone-npm-shim');
+var Random = require('meteor-standalone-random');
+var EJSON = require('meteor-standalone-ejson');
+
+var __meteor_runtime_config__ = {};
+
 var Future;
 if (Meteor.isServer)
   Future = Npm.require('fibers/future');
@@ -6,7 +14,7 @@ if (Meteor.isServer)
 /* TestCaseResults                                                            */
 /******************************************************************************/
 
-TestCaseResults = function (test_case, onEvent, onException, stop_at_offset) {
+var TestCaseResults = function (test_case, onEvent, onException, stop_at_offset) {
   var self = this;
   self.test_case = test_case;
   self.onEvent = onEvent;
@@ -355,7 +363,7 @@ _.extend(TestCaseResults.prototype, {
 /* TestCase                                                                   */
 /******************************************************************************/
 
-TestCase = function (name, func) {
+var TestCase = function (name, func) {
   var self = this;
   self.name = name;
   self.func = func;
@@ -419,7 +427,7 @@ _.extend(TestCase.prototype, {
 /* TestManager                                                                */
 /******************************************************************************/
 
-TestManager = function () {
+var TestManager = function () {
   var self = this;
   self.tests = {};
   self.ordered_tests = [];
@@ -458,7 +466,7 @@ TestManager = new TestManager;
 /* TestRun                                                                    */
 /******************************************************************************/
 
-TestRun = function (manager, onReport, pathPrefix) {
+var TestRun = function (manager, onReport, pathPrefix) {
   var self = this;
   self.manager = manager;
   self.onReport = onReport;
@@ -625,7 +633,7 @@ _.extend(TestRun.prototype, {
 /* Public API                                                                 */
 /******************************************************************************/
 
-Tinytest = {};
+var Tinytest = {};
 
 Tinytest.addAsync = function (name, func) {
   TestManager.addCase(new TestCase(name, func));
@@ -667,3 +675,89 @@ Tinytest._TestCaseResults = TestCaseResults;
 Tinytest._TestCase = TestCase;
 Tinytest._TestManager = TestManager;
 Tinytest._TestRun = TestRun;
+
+
+Tinytest.runNpm = function(){
+
+  var passed = 0;
+  var failed = 0;
+  var expected = 0;
+  var resultSet = {};
+
+  var getName = function (result) {
+    return result.groupPath.join(" - ") + " - " + result.test;
+  };
+
+  console.log("running server-side tests");
+  Tinytest._runTests(function (results) {
+    var name = getName(results);
+    if (!_.has(resultSet, name)) {
+      var testPath = EJSON.clone(results.groupPath);
+      testPath.push(results.test);
+      resultSet[name] = {
+        name: name,
+        status: "PENDING",
+        events: [],
+        testPath: testPath
+      };
+    }
+    _.each(results.events, function (event) {
+      resultSet[name].events.push(event);
+      switch (event.type) {
+      case "ok":
+        break;
+      case "expected_fail":
+        if (resultSet[name].status !== "FAIL")
+          resultSet[name].status = "EXPECTED";
+        break;
+      case "exception":
+        console.log(name, ":", "!!!!!!!!! FAIL !!!!!!!!!!!");
+        if (event.details && event.details.stack)
+          console.log(event.details.stack);
+        else
+          console.log("Test failed with exception");
+        failed++;
+        break;
+      case "finish":
+        switch (resultSet[name].status) {
+        case "OK":
+          break;
+        case "PENDING":
+          resultSet[name].status = "OK";
+          console.log(name, ":", "OK");
+          passed++;
+          break;
+        case "EXPECTED":
+          console.log(name, ":", "EXPECTED FAILURE");
+          expected++;
+          break;
+        case "FAIL":
+          failed++;
+          console.log(name, ":", "!!!!!!!!! FAIL !!!!!!!!!!!");
+          console.log(JSON.stringify(resultSet[name].info));
+          break;
+        default:
+          console.log(name, ": unknown state for the test to be in");
+        }
+        break;
+      default:
+        resultSet[name].status = "FAIL";
+        resultSet[name].info = results;
+        break;
+      }
+    });
+  }, function () {
+    console.log("passed/expected/failed/total",
+                passed, "/", expected, "/", failed, "/", _.size(resultSet));
+    if (failed > 0) {
+      console.log("TESTS FAILED");
+    } else {
+      console.log("ALL TESTS PASSED");
+    }
+    process.exit(failed ? 1 : 0);
+  });
+
+}
+
+module.exports = Tinytest;
+

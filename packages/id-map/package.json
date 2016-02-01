@@ -1,0 +1,32 @@
+{
+  "name": "meteor-standalone-id-map",
+  "version": "1.0.5",
+  "description": "NPM package for meteor group's id-map",
+  "main": "id-map.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivanthedeployer/meteor.git"
+  },
+  "author": "ivanthedeployer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ivanthedeployer/meteor/issues"
+  },
+  "homepage": "https://github.com/ivanthedeployer/meteor#readme",
+  "dependencies": {
+    "meteor-standalone-ejson": "*",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4",
+    "strict-mode": "^0.4.2",
+    "underscore": "^1.8.3"
+  }
+}

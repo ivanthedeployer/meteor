@@ -1,3 +1,9 @@
+require('strict-mode')(function () {
+
+var Random = require('./random-compiled.js');
+var Tinytest = require('meteor-standalone-npm-tinytest');
+var Meteor = {isClient: true};
+
 Tinytest.add('random', function (test) {
   // Deterministic with a specified seed, which should generate the
   // same sequence in all environments.
@@ -48,3 +54,8 @@ Tinytest.add('random - createWithSeeds requires parameters', function (test) {
     Random.createWithSeeds();
   });
 });
+
+Tinytest.runNpm();
+
+});
+

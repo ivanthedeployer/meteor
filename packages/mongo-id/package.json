@@ -1,0 +1,29 @@
+{
+  "name": "meteor-standalone-mongo-id",
+  "version": "0.0.2",
+  "description": "NPM package for meteor group mongo-id package",
+  "main": "id.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivanthedeployer/meteor.git"
+  },
+  "author": "ivanthedeployer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ivanthedeployer/meteor/issues"
+  },
+  "homepage": "https://github.com/ivanthedeployer/meteor#readme",
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4",
+    "strict-mode": "^0.4.2",
+    "underscore": "^1.8.3"
+  },
+  "dependencies": {
+    "meteor-standalone-ejson": "*",
+    "meteor-standalone-random": "*"
+  }
+}

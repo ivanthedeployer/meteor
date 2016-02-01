@@ -6,7 +6,7 @@
  * @namespace Tracker
  * @summary The namespace for Tracker-related methods.
  */
-Tracker = {};
+var Tracker = {};
 
 // http://docs.meteor.com/#tracker_active
 
@@ -95,9 +95,11 @@ var withNoYieldsAllowed = function (f) {
   } else {
     return function () {
       var args = arguments;
-      Meteor._noYieldsAllowed(function () {
+      // No-op in NPM anyway
+      //Meteor._noYieldsAllowed(function () {
         f.apply(null, args);
-      });
+      //});
+
     };
   }
 };
@@ -617,3 +619,6 @@ Tracker.afterFlush = function (f) {
   afterFlushCallbacks.push(f);
   requireFlush();
 };
+
+module.exports = Tracker;
+

@@ -1,4 +1,11 @@
-DiffSequence = {};
+var _ = require('underscore');
+var EJSON = require('meteor-standalone-ejson');
+var global = Function('return this')();
+// Patch the meteor object used here
+var Meteor = global.Meteor || {_debug: function(s){console.debug(s);}};
+
+var DiffSequence = {};
+
 
 // ordered: bool.
 // old_results and new_results: collections of documents.
@@ -248,4 +255,6 @@ DiffSequence.applyChanges = function (doc, changeFields) {
       doc[key] = value;
   });
 };
+
+module.exports = DiffSequence;
 

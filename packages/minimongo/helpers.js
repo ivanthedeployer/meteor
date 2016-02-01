@@ -1,25 +1,32 @@
+var EJSON = require('meteor-standalone-ejson');
+var global = Function('return this')();
+var _ = require('underscore');
+
+function getFns(LocalCollection) {
+
 // Like _.isArray, but doesn't regard polyfilled Uint8Arrays on old browsers as
 // arrays.
 // XXX maybe this should be EJSON.isArray
-isArray = function (x) {
+var isArray = function (x) {
   return _.isArray(x) && !EJSON.isBinary(x);
 };
 
 // XXX maybe this should be EJSON.isObject, though EJSON doesn't know about
 // RegExp
 // XXX note that _type(undefined) === 3!!!!
-isPlainObject = LocalCollection._isPlainObject = function (x) {
+var isPlainObject = LocalCollection._isPlainObject = function (x) {
   return x && LocalCollection._f._type(x) === 3;
 };
 
-isIndexable = function (x) {
+var isIndexable = function (x) {
   return isArray(x) || isPlainObject(x);
 };
 
 // Returns true if this is an object with at least one key and all keys begin
 // with $.  Unless inconsistentOK is set, throws if some keys begin with $ and
 // others don't.
-isOperatorObject = function (valueSelector, inconsistentOK) {
+var isOperatorObject = function (valueSelector, inconsistentOK) {
+
   if (!isPlainObject(valueSelector))
     return false;
 
@@ -40,6 +47,19 @@ isOperatorObject = function (valueSelector, inconsistentOK) {
 
 
 // string can be converted to integer
-isNumericKey = function (s) {
+var isNumericKey = function (s) {
   return /^[0-9]+$/.test(s);
 };
+
+var fns = {
+  isArray: isArray,
+  isPlainObject: isPlainObject,
+  isIndexable: isIndexable,
+  isOperatorObject: isOperatorObject,
+  isNumericKey: isNumericKey
+};
+  return fns;
+}
+
+if(global.LocalCollection){getFns(global.LocalCollection);}
+

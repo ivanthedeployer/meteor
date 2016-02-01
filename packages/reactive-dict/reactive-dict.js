@@ -1,3 +1,12 @@
+var _ = require('underscore');
+var EJSON = require('meteor-standalone-ejson');
+var Package = {
+  mongo: {
+    Mongo: require('meteor-standalone-mongo-id')
+  }
+};
+var Tracker = require('meteor-standalone-tracker');
+
 // XXX come up with a serialization method which canonicalizes object key
 // order, which would allow us to use objects as values for equals.
 var stringify = function (value) {
@@ -16,7 +25,7 @@ var changed = function (v) {
 };
 
 // XXX COMPAT WITH 0.9.1 : accept migrationData instead of dictName
-ReactiveDict = function (dictName) {
+var ReactiveDict = function (dictName) {
   // this.keys: key -> value
   if (dictName) {
     if (typeof dictName === 'string') {
@@ -97,7 +106,8 @@ _.extend(ReactiveDict.prototype, {
     var self = this;
 
     // Mongo.ObjectID is in the 'mongo' package
-    var ObjectID = null;
+    // var ObjectID = null;
+
     if (Package.mongo) {
       ObjectID = Package.mongo.Mongo.ObjectID;
     }
@@ -213,3 +223,8 @@ _.extend(ReactiveDict.prototype, {
     return this.keys;
   }
 });
+
+require('./migration.js')(ReactiveDict);
+
+module.exports.ReactiveDict = ReactiveDict;
+

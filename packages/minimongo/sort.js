@@ -1,3 +1,6 @@
+var global = Function('return this')();
+var _ = require('underscore');
+
 // Give a sort spec, which can be in any of these forms:
 //   {"key1": 1, "key2": -1}
 //   [["key1", "asc"], ["key2", "desc"]]
@@ -10,6 +13,7 @@
 // return a function that takes two objects, and returns -1 if the
 // first object comes first in order, 1 if the second object comes
 // first, or 0 if neither object comes before the other.
+function setSort(Minimongo, LocalCollection){
 
 Minimongo.Sorter = function (spec, options) {
   var self = this;
@@ -405,3 +409,10 @@ var composeComparators = function (comparatorArray) {
     return 0;
   };
 };
+
+}
+
+if(global.LocalCollection && global.Minimongo){setSort(Minimongo, LocalCollection);}
+
+module.exports = setSort;
+

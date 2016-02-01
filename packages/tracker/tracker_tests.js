@@ -1,3 +1,15 @@
+require('strict-mode')(function () {
+
+
+var Tinytest = require('meteor-standalone-npm-tinytest');
+var Tracker = require('./tracker.js');
+var Meteor = require('meteor-standalone-npm-shim');
+var _ = require('underscore');
+Meteor._suppress_log = function(){};
+// Some tests not possible at this point due to package shortages
+var testAsyncMulti = function(){};
+
+
 Tinytest.add('tracker - run', function (test) {
   var d = new Tracker.Dependency;
   var x = 0;
@@ -494,4 +506,8 @@ testAsyncMulti('tracker - Tracker.autorun, onError option', [function (test, exp
   d.changed();
   Tracker.flush();
 }]);
+
+Tinytest.runNpm();
+
+});
 

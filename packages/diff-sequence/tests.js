@@ -1,3 +1,12 @@
+require('strict-mode')(function () {
+
+
+var Tinytest = require('meteor-standalone-npm-tinytest');
+var EJSON = require('meteor-standalone-ejson');
+var DiffSequence = require('./diff.js');
+var _ = require('underscore');
+
+
 Tinytest.add("diff-sequence - diff changes ordering", function (test) {
   var makeDocs = function (ids) {
     return _.map(ids, function (id) { return {_id: id};});
@@ -156,5 +165,9 @@ Tinytest.add("diff-sequence - diff", function (test) {
   diffTest(10, [7, -4, 11, 6, 12, -1, 5]);
   diffTest(3, [-3, -2, -1]);
   diffTest(10, [-2, 7, 4, 6, 11, -3, -8, 9]);
+});
+
+Tinytest.runNpm();
+
 });
 

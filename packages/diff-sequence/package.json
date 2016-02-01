@@ -1,0 +1,27 @@
+{
+  "name": "meteor-standalone-diff-sequence",
+  "version": "0.0.2",
+  "description": "Meteor group's diff-sequence packaged for NPM",
+  "main": "diff.js",
+  "scripts": {
+    "test": "node tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivanthedeployer/meteor.git"
+  },
+  "author": "ivanthedeployer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ivanthedeployer/meteor/issues"
+  },
+  "homepage": "https://github.com/ivanthedeployer/meteor#readme",
+  "devDependencies": {
+    "meteor-standalone-npm-tinytest": "*",
+    "strict-mode": "^0.4.2"
+  },
+  "dependencies": {
+    "meteor-standalone-ejson": "*",
+    "underscore": "^1.8.3"
+  }
+}

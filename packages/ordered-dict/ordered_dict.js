@@ -1,3 +1,5 @@
+var _ = require('underscore');
+
 // This file defines an ordered dictionary abstraction that is useful for
 // maintaining a dataset backed by observeChanges.  It supports ordering items
 // by specifying the item they now come before.
@@ -15,7 +17,9 @@ var element = function (key, value, next, prev) {
     prev: prev
   };
 };
-OrderedDict = function (/* ... */) {
+
+var OrderedDict = function (/* ... */) {
+
   var self = this;
   self._dict = {};
   self._first = null;
@@ -207,3 +211,6 @@ _.extend(OrderedDict.prototype, {
 
 });
 OrderedDict.BREAK = {"break": true};
+
+module.exports = OrderedDict;
+

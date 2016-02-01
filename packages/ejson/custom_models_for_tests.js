@@ -1,3 +1,7 @@
+var _ = require('underscore');
+
+function setup(EJSON, EJSONTest){
+
 function Address (city, state) {
   this.city = city;
   this.state = state;
@@ -85,3 +89,7 @@ _.extend(EJSONTest, {
   Person: Person,
   Holder: Holder
 });
+
+}
+module.exports = setup;
+

@@ -1,3 +1,6 @@
+function addMigrations (ReactiveDict){
+var Meteor = {isClient: false}; // JUST SHIMMING BELOW FUNCTION
+
 ReactiveDict._migratedDictData = {}; // name -> data
 ReactiveDict._dictsToMigrate = {}; // name -> ReactiveDict
 
@@ -34,3 +37,7 @@ if (Meteor.isClient && Package.reload) {
     return [true, {dicts: dataToMigrate}];
   });
 }
+
+}
+
+module.exports = addMigrations;

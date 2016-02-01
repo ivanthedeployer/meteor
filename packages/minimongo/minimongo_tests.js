@@ -1,3 +1,17 @@
+require('strict-mode')(function () {
+
+var mm = require('./minimongo.js');
+var LocalCollection = mm.LocalCollection,
+    Minimongo = mm.Minimongo,
+    _ = require('underscore'),
+    Meteor = require('meteor-standalone-npm-shim'),
+    MinimongoTest = mm.MinimongoTest,
+    Tinytest = require('meteor-standalone-npm-tinytest'),
+    Random = require('meteor-standalone-random'),
+    MongoID = require('meteor-standalone-mongo-id'),
+    ReactiveVar = mm.ReactiveVar,
+    Tracker = mm.Tracker,
+    EJSON = require('meteor-standalone-ejson');
 
 // Hack to make LocalCollection generate ObjectIDs by default.
 LocalCollection._useOID = true;
@@ -3079,3 +3093,8 @@ Tinytest.add("minimongo - reactive skip/limit count while updating", function(te
 
   c.stop();
 });
+
+Tinytest.runNpm();
+
+});
+

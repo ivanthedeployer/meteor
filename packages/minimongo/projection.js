@@ -1,3 +1,7 @@
+var global = Function('return this')();
+var _ = require('underscore');
+var EJSON = require('meteor-standalone-ejson');
+
 // Knows how to compile a fields projection to a predicate function.
 // @returns - Function: a closure that filters out an object according to the
 //            fields projection rules:
@@ -5,6 +9,9 @@
 //            @returns - Object: a document with the fields filtered out
 //                       according to projection rules. Doesn't retain subfields
 //                       of passed argument.
+function setProjection(Minimongo, LocalCollection, MinimongoError, global){
+var _globals = {};
+
 LocalCollection._compileProjection = function (fields) {
   LocalCollection._checkSupportedProjection(fields);
 
@@ -52,7 +59,8 @@ LocalCollection._compileProjection = function (fields) {
 //  - tree - Object - tree representation of keys involved in projection
 //  (exception for '_id' as it is a special case handled separately)
 //  - including - Boolean - "take only certain fields" type of projection
-projectionDetails = function (fields) {
+var projectionDetails = function (fields) {
+
   // Find the non-_id keys (_id is handled specially because it is included unless
   // explicitly excluded). Sort the keys, so that our code to detect overlaps
   // like 'foo' and 'foo.bar' can assume that 'foo' comes first.
@@ -115,6 +123,8 @@ projectionDetails = function (fields) {
   };
 };
 
+_globals.projectionDetails = projectionDetails;
+
 // paths - Array: list of mongo style paths
 // newLeafFn - Function: of form function(path) should return a scalar value to
 //                       put into list created for that path
@@ -124,7 +134,8 @@ projectionDetails = function (fields) {
 //                        conflict resolution.
 // initial tree - Optional Object: starting tree.
 // @returns - Object: tree represented as a set of nested objects
-pathsToTree = function (paths, newLeafFn, conflictFn, tree) {
+var pathsToTree = function (paths, newLeafFn, conflictFn, tree) {
+
   tree = tree || {};
   _.each(paths, function (keyPath) {
     var treePos = tree;
@@ -159,6 +170,8 @@ pathsToTree = function (paths, newLeafFn, conflictFn, tree) {
   return tree;
 };
 
+_globals.pathsToTree = pathsToTree;
+
 LocalCollection._checkSupportedProjection = function (fields) {
   if (!_.isObject(fields) || _.isArray(fields))
     throw MinimongoError("fields option must be an object");
@@ -172,3 +185,10 @@ LocalCollection._checkSupportedProjection = function (fields) {
       throw MinimongoError("Projection values should be one of 1, 0, true, or false");
   });
 };
+
+}
+
+if(global.Minimongo && global.LocalCollection){setProjection(global.Minimongo, global.LocalCollection, global);}
+
+module.exports = setProjection;
+

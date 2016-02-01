@@ -1,3 +1,5 @@
+'use strict';
+
 // We use cryptographically strong PRNGs (crypto.getRandomBytes() on the server,
 // window.crypto.getRandomValues() in the browser) when available. If these
 // PRNGs fail, we fall back to the Alea PRNG, which is not cryptographically
@@ -8,21 +10,21 @@
 // that to construct hex string.
 var global = Function('return this')();
 var Meteor = global.Meteor || {};
-var Npm = global.Npm || {Npm: function(){throw new Error('You cannot use NPM under these circumstances');}};
+var Npm = global.Npm || { Npm: function Npm() {
+    throw new Error('You cannot use NPM under these circumstances');
+  } };
 
 var Random;
 
-
-if (Meteor.isServer)
-  var nodeCrypto = Npm.require('crypto');
+if (Meteor.isServer) var nodeCrypto = Npm.require('crypto');
 
 // see http://baagoe.org/en/wiki/Better_random_numbers_for_javascript
 // for a full discussion and Alea implementation.
-var Alea = function () {
+var Alea = function Alea() {
   function Mash() {
     var n = 0xefc8249d;
 
-    var mash = function(data) {
+    var mash = function mash(data) {
       data = data.toString();
       for (var i = 0; i < data.length; i++) {
         n += data.charCodeAt(i);
@@ -41,14 +43,14 @@ var Alea = function () {
     return mash;
   }
 
-  return (function (args) {
+  return function (args) {
     var s0 = 0;
     var s1 = 0;
     var s2 = 0;
     var c = 1;
 
     if (args.length == 0) {
-      args = [+new Date];
+      args = [+new Date()];
     }
     var mash = Mash();
     s0 = mash(' ');
@@ -71,29 +73,26 @@ var Alea = function () {
     }
     mash = null;
 
-    var random = function() {
+    var random = function random() {
       var t = 2091639 * s0 + c * 2.3283064365386963e-10; // 2^-32
       s0 = s1;
       s1 = s2;
       return s2 = t - (c = t | 0);
     };
-    random.uint32 = function() {
+    random.uint32 = function () {
       return random() * 0x100000000; // 2^32
     };
-    random.fract53 = function() {
-      return random() +
-        (random() * 0x200000 | 0) * 1.1102230246251565e-16; // 2^-53
+    random.fract53 = function () {
+      return random() + (random() * 0x200000 | 0) * 1.1102230246251565e-16; // 2^-53
     };
     random.version = 'Alea 0.9';
     random.args = args;
     return random;
-
-  } (Array.prototype.slice.call(arguments)));
+  }(Array.prototype.slice.call(arguments));
 };
 
 var UNMISTAKABLE_CHARS = "23456789ABCDEFGHJKLMNPQRSTWXYZabcdefghijkmnopqrstuvwxyz";
-var BASE64_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-  "0123456789-_";
+var BASE64_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789-_";
 
 // `type` is one of `RandomGenerator.Type` as defined below.
 //
@@ -101,7 +100,7 @@ var BASE64_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" +
 // - seeds: (required, only for RandomGenerator.Type.ALEA) an array
 //   whose items will be `toString`ed and used as the seed to the Alea
 //   algorithm
-var RandomGenerator = function (type, options) {
+var RandomGenerator = function RandomGenerator(type, options) {
   var self = this;
   self.type = type;
 
@@ -132,7 +131,7 @@ RandomGenerator.Type = {
 
   // Use the *fast*, seedaable and not cryptographically secure
   // Alea algorithm
-  ALEA: "ALEA",
+  ALEA: "ALEA"
 };
 
 RandomGenerator.prototype.fraction = function () {
@@ -143,12 +142,12 @@ RandomGenerator.prototype.fraction = function () {
     var numerator = parseInt(self.hexString(8), 16);
     return numerator * 2.3283064365386963e-10; // 2^-32
   } else if (self.type === RandomGenerator.Type.BROWSER_CRYPTO) {
-    var array = new Uint32Array(1);
-    window.crypto.getRandomValues(array);
-    return array[0] * 2.3283064365386963e-10; // 2^-32
-  } else {
-    throw new Error('Unknown random generator type: ' + self.type);
-  }
+      var array = new Uint32Array(1);
+      window.crypto.getRandomValues(array);
+      return array[0] * 2.3283064365386963e-10; // 2^-32
+    } else {
+        throw new Error('Unknown random generator type: ' + self.type);
+      }
 };
 
 RandomGenerator.prototype.hexString = function (digits) {
@@ -173,8 +172,7 @@ RandomGenerator.prototype.hexString = function (digits) {
   }
 };
 
-RandomGenerator.prototype._randomString = function (charsCount,
-                                                    alphabet) {
+RandomGenerator.prototype._randomString = function (charsCount, alphabet) {
   var self = this;
   var digits = [];
   for (var i = 0; i < charsCount; i++) {
@@ -187,8 +185,7 @@ RandomGenerator.prototype.id = function (charsCount) {
   var self = this;
   // 17 characters is around 96 bits of entropy, which is the amount of
   // state in the Alea PRNG.
-  if (charsCount === undefined)
-    charsCount = 17;
+  if (charsCount === undefined) charsCount = 17;
 
   return self._randomString(charsCount, UNMISTAKABLE_CHARS);
 };
@@ -197,54 +194,33 @@ RandomGenerator.prototype.secret = function (charsCount) {
   var self = this;
   // Default to 256 bits of entropy, or 43 characters at 6 bits per
   // character.
-  if (charsCount === undefined)
-    charsCount = 43;
+  if (charsCount === undefined) charsCount = 43;
   return self._randomString(charsCount, BASE64_CHARS);
 };
 
 RandomGenerator.prototype.choice = function (arrayOrString) {
   var index = Math.floor(this.fraction() * arrayOrString.length);
-  if (typeof arrayOrString === "string")
-    return arrayOrString.substr(index, 1);
-  else
-    return arrayOrString[index];
+  if (typeof arrayOrString === "string") return arrayOrString.substr(index, 1);else return arrayOrString[index];
 };
 
 // instantiate RNG.  Heuristically collect entropy from various sources when a
 // cryptographic PRNG isn't available.
 
 // client sources
-var height = (typeof window !== 'undefined' && window.innerHeight) ||
-      (typeof document !== 'undefined'
-       && document.documentElement
-       && document.documentElement.clientHeight) ||
-      (typeof document !== 'undefined'
-       && document.body
-       && document.body.clientHeight) ||
-      1;
+var height = typeof window !== 'undefined' && window.innerHeight || typeof document !== 'undefined' && document.documentElement && document.documentElement.clientHeight || typeof document !== 'undefined' && document.body && document.body.clientHeight || 1;
 
-var width = (typeof window !== 'undefined' && window.innerWidth) ||
-      (typeof document !== 'undefined'
-       && document.documentElement
-       && document.documentElement.clientWidth) ||
-      (typeof document !== 'undefined'
-       && document.body
-       && document.body.clientWidth) ||
-      1;
+var width = typeof window !== 'undefined' && window.innerWidth || typeof document !== 'undefined' && document.documentElement && document.documentElement.clientWidth || typeof document !== 'undefined' && document.body && document.body.clientWidth || 1;
 
-var agent = (typeof navigator !== 'undefined' && navigator.userAgent) || "";
+var agent = typeof navigator !== 'undefined' && navigator.userAgent || "";
 
 function createAleaGeneratorWithGeneratedSeed() {
-  return new RandomGenerator(
-    RandomGenerator.Type.ALEA,
-    {seeds: [new Date, height, width, agent, Math.random()]});
+  return new RandomGenerator(RandomGenerator.Type.ALEA, { seeds: [new Date(), height, width, agent, Math.random()] });
 };
 
 if (Meteor.isServer) {
   Random = new RandomGenerator(RandomGenerator.Type.NODE_CRYPTO);
 } else {
-  if (typeof window !== "undefined" && window.crypto &&
-      window.crypto.getRandomValues) {
+  if (typeof window !== "undefined" && window.crypto && window.crypto.getRandomValues) {
     Random = new RandomGenerator(RandomGenerator.Type.BROWSER_CRYPTO);
   } else {
     // On IE 10 and below, there's no browser crypto API
@@ -258,11 +234,15 @@ if (Meteor.isServer) {
 
 // Create a non-cryptographically secure PRNG with a given seed (using
 // the Alea algorithm)
-Random.createWithSeeds = function (...seeds) {
+Random.createWithSeeds = function () {
+  for (var _len = arguments.length, seeds = Array(_len), _key = 0; _key < _len; _key++) {
+    seeds[_key] = arguments[_key];
+  }
+
   if (seeds.length === 0) {
     throw new Error("No seeds were provided");
   }
-  return new RandomGenerator(RandomGenerator.Type.ALEA, {seeds: seeds});
+  return new RandomGenerator(RandomGenerator.Type.ALEA, { seeds: seeds });
 };
 
 // Used like `Random`, but much faster and not cryptographically

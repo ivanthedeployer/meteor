@@ -7,6 +7,13 @@
 // - If the return value has an _id field, verify that it matches the
 //   original _id field
 // - If the return value doesn't have an _id field, add it back.
+var global = Function('return this')();
+var _ = require('underscore');
+var EJSON = require('meteor-standalone-ejson');
+var Tracker = require('meteor-standalone-tracker');
+
+var setWrapTransform = function (LocalCollection) {
+
 LocalCollection.wrapTransform = function (transform) {
   if (! transform)
     return null;
@@ -44,3 +51,9 @@ LocalCollection.wrapTransform = function (transform) {
   wrapped.__wrappedTransform__ = true;
   return wrapped;
 };
+}
+
+if(global.LocalCollection){setWrapTransform(global.LocalCollection);}
+
+module.exports = setWrapTransform;
+

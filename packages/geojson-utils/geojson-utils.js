@@ -1,3 +1,5 @@
+  var gju = {};
+
 (function () {
   var gju = {};
 
@@ -5,6 +7,7 @@
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = gju;
   }
+
 
   // adapted from http://www.kevlindev.com/gui/math/intersection/Intersection.js
   gju.lineStringsIntersect = function (l1, l2) {
@@ -63,7 +66,7 @@
   }
 
   gju.pointInBoundingBox = function (point, bounds) {
-    return !(point.coordinates[1] < bounds[0][0] || point.coordinates[1] > bounds[1][0] || point.coordinates[0] < bounds[0][1] || point.coordinates[0] > bounds[1][1]) 
+    return !(point.coordinates[1] < bounds[0][0] || point.coordinates[1] > bounds[1][0] || point.coordinates[0] < bounds[0][1] || point.coordinates[0] > bounds[1][1])
   }
 
   // Point in Polygon
@@ -376,5 +379,7 @@
       'coordinates': [gju.numberToDegree(lat2), gju.numberToDegree(lon2)]
     };
   };
+
+module.exports = gju;
 
 })();

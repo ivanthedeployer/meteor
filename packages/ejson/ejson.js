@@ -1,9 +1,17 @@
+var _ = require('underscore');
+var Base64 = require('meteor-standalone-base64');
+var global = Function('return this')();
+var Meteor = global.Meteor || {};
+// This file is a partial analogue to fiber_helpers.js, which allows the client
+// to use a queue too, and also to call noYieldsAllowed.
+
+
 /**
  * @namespace
  * @summary Namespace for EJSON functions
  */
-EJSON = {};
-EJSONTest = {};
+var EJSON = {};
+var EJSONTest = {};
 
 
 
@@ -514,3 +522,18 @@ EJSON.clone = function (v) {
 // then 'base64' would have to use EJSON.newBinary, and 'ejson' would
 // also have to use 'base64'.)
 EJSON.newBinary = Base64.newBinary;
+
+// The client has no ability to yield, so noYieldsAllowed is a noop.
+// Detect if we're working in Meteor or Node
+if(!Meteor._noYieldsAllowed){
+  require('./stringify.js')(EJSON);
+  Meteor._noYieldsAllowed = function (f) {
+    return f();
+  };
+}
+
+// Patch in the added functionality
+EJSON.EJSONTest = EJSONTest;
+
+module.exports = EJSON;
+

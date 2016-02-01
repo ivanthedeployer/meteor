@@ -1,4 +1,8 @@
-IdMap = function (idStringify, idParse) {
+var _ = require('underscore');
+var EJSON = require('meteor-standalone-ejson');
+
+var IdMap = function (idStringify, idParse) {
+
   var self = this;
   self._map = {};
   self._idStringify = idStringify || JSON.stringify;
@@ -74,4 +78,6 @@ _.extend(IdMap.prototype, {
     return clone;
   }
 });
+
+module.exports = IdMap;
 

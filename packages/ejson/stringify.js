@@ -6,6 +6,7 @@
 //    Public Domain.
 //
 //    NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+var _ = require('underscore');
 
 function quote(string) {
   return JSON.stringify(string);
@@ -97,6 +98,37 @@ var str = function (key, holder, singleIndent, outerIndent, canonical) {
 }
 
 // If the JSON object does not yet have a stringify method, give it one.
+var _addFunctionality = function (EJSON) {
+
+  EJSON._canonicalStringify = function (value, options) {
+    // Make a fake root object containing our value under the key of ''.
+    // Return the result of stringifying the value.
+    options = _.extend({
+      indent: "",
+      canonical: false
+    }, options);
+    if (options.indent === true) {
+      options.indent = "  ";
+    } else if (typeof options.indent === 'number') {
+      var newIndent = "";
+      for (var i = 0; i < options.indent; i++) {
+        newIndent += ' ';
+      }
+      options.indent = newIndent;
+    }
+    return str('', {'': value}, options.indent, "", options.canonical);
+  };
+
+
+};
+
+var global = Function('return this')();
+if(global.EJSON) {
+  _addFunctionality(global.EJSON);
+}
+
+module.exports = _addFunctionality;
+
 
 EJSON._canonicalStringify = function (value, options) {
   // Make a fake root object containing our value under the key of ''.

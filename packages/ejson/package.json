@@ -1,0 +1,28 @@
+{
+  "name": "meteor-standalone-ejson",
+  "version": "1.0.83",
+  "description": "Standalone EJSON package for NPM ",
+  "main": "ejson.js",
+  "scripts": {
+    "test": "node ejson_test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivanthedeployer/meteor.git"
+  },
+  "author": "ivanthedeployer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ivanthedeployer/meteor/issues"
+  },
+  "homepage": "https://github.com/ivanthedeployer/meteor#readme",
+  "dependencies": {
+    "meteor-standalone-base64": "*",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "meteor-standalone-npm-tinytest": "*",
+    "meteor-standalone-random": "*",
+    "strict-mode": "^0.4.2"
+  }
+}

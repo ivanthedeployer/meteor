@@ -1,3 +1,5 @@
+var Tracker = require('meteor-standalone-tracker');
+
 /*
  * ## [new] ReactiveVar(initialValue, [equalsFunc])
  *
@@ -27,14 +29,14 @@
  */
 
 /**
- * @class 
+ * @class
  * @instanceName reactiveVar
  * @summary Constructor for a ReactiveVar, which represents a single reactive variable.
  * @locus Client
  * @param {Any} initialValue The initial value to set.  `equalsFunc` is ignored when setting the initial value.
  * @param {Function} [equalsFunc] Optional.  A function of two arguments, called on the old value and the new value whenever the ReactiveVar is set.  If it returns true, no set is performed.  If omitted, the default `equalsFunc` returns true if its arguments are `===` and are of type number, boolean, string, undefined, or null.
  */
-ReactiveVar = function (initialValue, equalsFunc) {
+var ReactiveVar = function (initialValue, equalsFunc) {
   if (! (this instanceof ReactiveVar))
     // called without `new`
     return new ReactiveVar(initialValue, equalsFunc);
@@ -94,3 +96,6 @@ ReactiveVar.prototype._numListeners = function() {
     count++;
   return count;
 };
+
+module.exports = ReactiveVar;
+

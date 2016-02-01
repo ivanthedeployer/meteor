@@ -1,0 +1,25 @@
+{
+  "name": "meteor-standalone-base64",
+  "version": "1.0.51",
+  "description": "Standalone NPM package for Meteor group base64",
+  "main": "base64.js",
+  "scripts": {
+    "test": "node base64_test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivanthedeployer/meteor.git"
+  },
+  "author": "ivanthedeployer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ivanthedeployer/meteor/issues"
+  },
+  "homepage": "https://github.com/ivanthedeployer/meteor#readme",
+  "devDependencies": {
+    "meteor-standalone-ejson": "*",
+    "meteor-standalone-npm-tinytest": "*",
+    "strict-mode": "^0.4.2",
+    "underscore": "^1.8.3"
+  }
+}

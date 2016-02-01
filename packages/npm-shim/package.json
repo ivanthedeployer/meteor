@@ -1,0 +1,22 @@
+{
+  "name": "meteor-standalone-npm-shim",
+  "version": "0.0.4",
+  "description": "A shim for core Meteor packages so they can be used standalone with NPM",
+  "main": "npm-shim.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivanthedeployer/meteor.git"
+  },
+  "author": "ivanthedeployer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ivanthedeployer/meteor/issues"
+  },
+  "homepage": "https://github.com/ivanthedeployer/meteor#readme",
+  "dependencies": {
+    "underscore": "^1.8.3"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "meteor-standalone-npm-tinytest",
+  "version": "0.0.16",
+  "description": "Meteor's Tinytest packaged for NPM so other standalone packages can run their regular test suite",
+  "main": "tinytest.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivanthedeployer/meteor.git"
+  },
+  "author": "ivanthedeployer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ivanthedeployer/meteor/issues"
+  },
+  "homepage": "https://github.com/ivanthedeployer/meteor#readme",
+  "dependencies": {
+    "meteor-standalone-ejson": "*",
+    "meteor-standalone-npm-shim": "*",
+    "meteor-standalone-random": "*",
+    "underscore": "^1.8.3"
+  }
+}

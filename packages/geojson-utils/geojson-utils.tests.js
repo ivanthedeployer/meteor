@@ -1,3 +1,12 @@
+require('strict-mode')(function () {
+
+
+var Tinytest = require('meteor-standalone-npm-tinytest');
+var _ = require('underscore');
+
+var gju = require('./geojson-utils.js');
+var GeoJSON = gju;
+
 var gju = GeoJSON;
 
 Tinytest.add("geojson-utils - line intersects", function (test) {
@@ -94,5 +103,9 @@ Tinytest.add("geojson-utils - points distance generated tests", function (test) 
   function toGeoJSONPoint (coordinates) {
     return { type: "Point", coordinates: coordinates };
   }
+});
+
+Tinytest.runNpm();
+
 });
 

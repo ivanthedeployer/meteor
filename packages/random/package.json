@@ -1,0 +1,32 @@
+{
+  "name": "meteor-standalone-random",
+  "version": "1.0.67",
+  "description": "NPM standalone version of Meteor group Random package",
+  "main": "random-compiled.js",
+  "scripts": {
+    "test": "node random_tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivanthedeployer/meteor.git"
+  },
+  "author": "ivanthedeployer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ivanthedeployer/meteor/issues"
+  },
+  "homepage": "https://github.com/ivanthedeployer/meteor#readme",
+  "dependencies": {
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "babel": "^6.3.26",
+    "babel-cli": "^6.4.0",
+    "babel-core": "^6.4.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-register": "^6.3.13",
+    "*": "0.0.14",
+    "strict-mode": "^0.4.2",
+    "underscore": "^1.8.3"
+  }
+}

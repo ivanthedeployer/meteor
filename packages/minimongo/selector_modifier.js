@@ -1,3 +1,8 @@
+var _ = require('underscore');
+var global = Function('return this')();
+
+var _selector_modifier = function (Minimongo, LocalCollection) {
+
 // Returns true if the modifier applied to some document may change the result
 // of matching the document by selector
 // The modifier is always in a form of Object:
@@ -6,6 +11,8 @@
 //    - 'foo.bar': 42
 //  - $unset
 //    - 'abc.d': 1
+
+
 Minimongo.Matcher.prototype.affectedByModifier = function (modifier) {
   var self = this;
   // safe check for $set/$unset being objects
@@ -218,3 +225,10 @@ var startsWith = function(str, starts) {
     str.substring(0, starts.length) === starts;
 };
 
+}
+
+if(global.Minimongo && global.LocalCollection){
+  _selector_modifier(Minimongo, LocalCollection);
+}
+
+module.exports = _selector_modifier;

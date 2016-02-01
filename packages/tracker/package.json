@@ -1,0 +1,24 @@
+{
+  "name": "meteor-standalone-tracker",
+  "version": "1.0.94",
+  "description": "NPM package for Meteor group's Tracker package",
+  "main": "tracker.js",
+  "scripts": {
+    "test": "node tracker_tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivanthedeployer/meteor.git"
+  },
+  "author": "ivanthedeployer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ivanthedeployer/meteor/issues"
+  },
+  "homepage": "https://github.com/ivanthedeployer/meteor#readme",
+  "devDependencies": {
+    "meteor-standalone-npm-shim": "*",
+    "meteor-standalone-npm-tinytest": "*",
+    "strict-mode": "^0.4.2"
+  }
+}

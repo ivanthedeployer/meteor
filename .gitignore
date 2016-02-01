@@ -21,3 +21,4 @@ npm-debug.log
 universe
 .babel-cache
 mongo-test-output
+node_modules/

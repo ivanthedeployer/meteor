@@ -6,8 +6,45 @@
 // a defined order, limit, and offset.  creating a Cursor with LocalCollection.find(),
 
 // ObserveHandle: the return value of a live query.
+//var Meteor = require('../meteor/timers.js');
+var global = Function('return this')();
+var _ = require('underscore');
 
-LocalCollection = function (name) {
+var Meteor = require('meteor-standalone-npm-shim');
+
+var Tracker = require('meteor-standalone-tracker');
+var EJSON = require('meteor-standalone-ejson');
+// This one has something like atest
+
+var Random = require('meteor-standalone-random');
+// Doesn't look necessary for thsi file
+//var IdMap = require('meteor-standalone-id-map');
+
+var MongoID = require('meteor-standalone-mongo-id');
+var DiffSequence = require('meteor-standalone-diff-sequence');
+var ReactiveVar = require('meteor-standalone-reactive-var');
+var ReactiveDict = require('meteor-standalone-reactive-dict');
+
+/*
+api.use([
+'underscore',
+'ejson',
+'id-map',
+'ordered-dict',
+'tracker',
+'mongo-id',
+'random',
+'diff-sequence'
+
+api.use('geojson-utils');
+// This package is used to get diff results on arrays and objects
+api.use('diff-sequence');
+
+*/
+
+
+var LocalCollection = function (name) {
+
   var self = this;
   self.name = name;
   // _id -> document (also containing id)
@@ -34,13 +71,13 @@ LocalCollection = function (name) {
   self.paused = false;
 };
 
-Minimongo = {};
+var Minimongo = {};
 
 // Object exported only for unit testing.
 // Use it to export private functions to test in Tinytest.
-MinimongoTest = {};
+var MinimongoTest = {};
 
-MinimongoError = function (message) {
+var MinimongoError = function (message) {
   var e = new Error(message);
   e.name = "MinimongoError";
   return e;
@@ -1088,4 +1125,35 @@ LocalCollection.prototype.resumeObservers = function () {
   }
   self._observeQueue.drain();
 };
+
+// From here on down, we have to provide the variables to extend
+// This attaches functions to the window
+var fns = require('./helpers.js')(LocalCollection);
+_.extend(global, fns);
+
+// These enhance functionality
+require('./wrap_transform.js')(LocalCollection);  // Needs help with global functions
+
+require('./selector.js')(Minimongo, LocalCollection, MinimongoTest, global);
+require('./sort.js')(Minimongo, LocalCollection);
+require('./selector_modifier.js')(Minimongo, LocalCollection);
+
+require('./projection.js')(Minimongo, LocalCollection, MinimongoError, global);
+require('./modify.js')(Minimongo, LocalCollection, MinimongoError);
+require('./diff.js')(LocalCollection);
+
+require('./id_map.js')(LocalCollection, Meteor);
+require('./observe.js')(LocalCollection);
+require('./objectid.js')(LocalCollection);
+
+module.exports = {
+  Minimongo: Minimongo,
+  LocalCollection: LocalCollection,
+  MinimongoTest: MinimongoTest,
+  ReactiveDict: ReactiveDict,
+  ReactiveVar: ReactiveVar,
+  Tracker: Tracker,
+  EJSON: EJSON
+};
+
 

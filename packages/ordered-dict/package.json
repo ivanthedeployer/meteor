@@ -1,0 +1,26 @@
+{
+  "name": "meteor-standalone-ordered-dict",
+  "version": "0.0.5",
+  "description": "NPM packaging for MDG's ordered-dict",
+  "main": "ordered_dict.js",
+  "scripts": {
+    "test": "node ordered_dict.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivanthedeployer/meteor.git"
+  },
+  "author": "ivanthedeployer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ivanthedeployer/meteor/issues"
+  },
+  "homepage": "https://github.com/ivanthedeployer/meteor#readme",
+  "dependencies": {
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "meteor-standalone-npm-tinytest": "*",
+    "strict-mode": "^0.4.2"
+  }
+}

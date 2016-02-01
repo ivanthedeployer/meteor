@@ -1,0 +1,24 @@
+{
+  "name": "meteor-standalone-geojson-utils",
+  "version": "0.0.5",
+  "description": "NPM packaging for MDG's geojson-utils",
+  "main": "geojson-utils.js",
+  "scripts": {
+    "test": "node geojson-utils.tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivanthedeployer/meteor.git"
+  },
+  "author": "ivanthedeployer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ivanthedeployer/meteor/issues"
+  },
+  "homepage": "https://github.com/ivanthedeployer/meteor#readme",
+  "devDependencies": {
+    "meteor-standalone-npm-tinytest": "*",
+    "strict-mode": "^0.4.2",
+    "underscore": "^1.8.3"
+  }
+}

@@ -1,3 +1,9 @@
+var global = Function('return this')();
+var _ = require('underscore');
+var MongoID = require('meteor-standalone-mongo-id');
+var EJSON = require('meteor-standalone-ejson');
+var GeoJSON = require('meteor-standalone-geojson-utils');
+
 // The minimongo selector compiler!
 
 // Terminology:
@@ -18,6 +24,9 @@
 // Main entry point.
 //   var matcher = new Minimongo.Matcher({a: {$gt: 5}});
 //   if (matcher.documentMatches({a: 7})) ...
+function setSelectors(Minimongo, LocalCollection, MinimongoTest, global){
+var _exports = {};
+
 Minimongo.Matcher = function (selector) {
   var self = this;
   // A set (object mapping string -> *) of all of the document paths looked
@@ -204,7 +213,8 @@ var convertElementMatcherToBranchedMatcher = function (
 };
 
 // Takes a RegExp object and returns an element matcher.
-regexpElementMatcher = function (regexp) {
+var regexpElementMatcher = function (regexp) {
+
   return function (value) {
     if (value instanceof RegExp) {
       // Comparing two regexps means seeing if the regexps are identical
@@ -226,9 +236,12 @@ regexpElementMatcher = function (regexp) {
   };
 };
 
+_exports.regexpElementMatcher = regexpElementMatcher;
+
 // Takes something that is not an operator object and returns an element matcher
 // for equality with that thing.
-equalityElementMatcher = function (elementSelector) {
+var equalityElementMatcher = function (elementSelector) {
+
   if (isOperatorObject(elementSelector))
     throw Error("Can't create equalityValueSelector for operator object");
 
@@ -245,6 +258,8 @@ equalityElementMatcher = function (elementSelector) {
     return LocalCollection._f._equal(elementSelector, value);
   };
 };
+
+_exports.equalityElementMatcher = equalityElementMatcher;
 
 // Takes an operator object (an object with $ keys) and returns a branched
 // matcher for it.
@@ -561,7 +576,8 @@ var makeInequality = function (cmpValueComparator) {
 //    being called
 //  - dontIncludeLeafArrays, a bool which causes an argument to be passed to
 //    expandArraysInBranches if it is called
-ELEMENT_OPERATORS = {
+var ELEMENT_OPERATORS = {
+
   $lt: makeInequality(function (cmpValue) {
     return cmpValue < 0;
   }),
@@ -722,6 +738,8 @@ ELEMENT_OPERATORS = {
   }
 };
 
+_exports.ELEMENT_OPERATORS = ELEMENT_OPERATORS;
+
 // makeLookupFunction(key) returns a lookup function.
 //
 // A lookup function takes in a document and returns an array of matching
@@ -774,7 +792,8 @@ ELEMENT_OPERATORS = {
 //
 // See the test 'minimongo - lookup' for some examples of what lookup functions
 // return.
-makeLookupFunction = function (key, options) {
+var makeLookupFunction = function (key, options) {
+
   options = options || {};
   var parts = key.split('.');
   var firstPart = parts.length ? parts[0] : '';
@@ -792,6 +811,7 @@ makeLookupFunction = function (key, options) {
       delete retVal.arrayIndices;
     return retVal;
   };
+
 
   // Doc will always be a plain object or an array.
   // apply an explicit numeric index, an array.
@@ -885,9 +905,11 @@ makeLookupFunction = function (key, options) {
     return result;
   };
 };
+_exports.makeLookupFunction = makeLookupFunction;
 MinimongoTest.makeLookupFunction = makeLookupFunction;
 
-expandArraysInBranches = function (branches, skipTheArrays) {
+var expandArraysInBranches = function (branches, skipTheArrays) {
+
   var branchesOut = [];
   _.each(branches, function (branch) {
     var thisIsArray = isArray(branch.value);
@@ -912,6 +934,7 @@ expandArraysInBranches = function (branches, skipTheArrays) {
   });
   return branchesOut;
 };
+_exports.expandArraysInBranches = expandArraysInBranches;
 
 var nothingMatcher = function (docOrBranchedValues) {
   return {result: false};
@@ -1139,3 +1162,9 @@ LocalCollection._removeDollarOperators = function (selector) {
       selectorDoc[k] = selector[k];
   return selectorDoc;
 };
+_.extend(global, _exports);
+
+}
+if(global.Minimongo && global.LocalCollection){setSelectors(Minimongo, LocalCollection, global);}
+
+module.exports = setSelectors;

@@ -1,3 +1,7 @@
+var global = Function('return this')();
+var _ = require('underscore');
+var EJSON = require('meteor-standalone-ejson');
+
 // XXX need a strategy for passing the binding of $ into this
 // function, from the compiled selector
 //
@@ -10,6 +14,8 @@
 //   - isInsert is set when _modify is being called to compute the document to
 //     insert as part of an upsert operation. We use this primarily to figure
 //     out when to set the fields in $setOnInsert, if present.
+function setModify(Minimongo, LocalCollection, MinimongoError){
+
 LocalCollection._modify = function (doc, mod, options) {
   options = options || {};
   if (!isPlainObject(mod))
@@ -435,3 +441,10 @@ var MODIFIERS = {
     throw MinimongoError("$bit is not supported");
   }
 };
+
+}
+
+if(global.LocalCollection && global.Minimongo){setModify(global.Minimongo, global.LocalCollection, global.MinimongoError);}
+
+module.exports = setModify;
+

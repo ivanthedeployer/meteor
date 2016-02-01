@@ -1,4 +1,7 @@
-MongoID = {};
+var EJSON = require('meteor-standalone-ejson');
+var Random = require('meteor-standalone-random');
+var MongoID = {};
+
 
 MongoID._looksLikeObjectID = function (str) {
   return str.length === 24 && str.match(/^[0-9a-f]*$/);
@@ -92,4 +95,6 @@ MongoID.idParse = function (id) {
     return id;
   }
 };
+
+module.exports = MongoID;
 

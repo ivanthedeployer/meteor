@@ -1,3 +1,10 @@
+require('strict-mode')(function () {
+var _ = require('underscore');
+var EJSON = require('meteor-standalone-ejson');
+var Tinytest = require('meteor-standalone-npm-tinytest');
+var Base64 = require('./base64.js');
+
+
 var asciiToArray = function (str) {
   var arr = Base64.newBinary(str.length);
   for (var i = 0; i < str.length; i++) {
@@ -57,3 +64,9 @@ Tinytest.add("base64 - non-text examples", function (test) {
     test.equal(Base64.decode(t.b64), expectedAsBinary);
   });
 });
+
+
+Tinytest.runNpm();
+
+});
+

@@ -1,3 +1,12 @@
+var global = Function('return this')();
+var EJSON = require('meteor-standalone-ejson');
+var OrderedDict = require('meteor-standalone-ordered-dict');
+var DiffSequence = require('meteor-standalone-diff-sequence');
+var MongoID = require('meteor-standalone-mongo-id');
+var _ = require('underscore');
+
+function setObserve(LocalCollection) {
+
 // XXX maybe move these into another ObserveHelpers package or something
 
 // _CachingChangeObserver is an object which receives observeChanges callbacks
@@ -179,3 +188,9 @@ LocalCollection._observeFromObserveChanges = function (cursor, observeCallbacks)
 
   return handle;
 };
+
+}
+
+if(global.LocalCollection){setObserve(LocalCollection);}
+
+module.exports = setObserve;

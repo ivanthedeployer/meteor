@@ -8,7 +8,11 @@ for (var i = 0; i < BASE_64_CHARS.length; i++) {
   BASE_64_VALS[BASE_64_CHARS.charAt(i)] = i;
 };
 
-Base64 = {};
+var Base64 = {};
+
+Base64.BASE_64_CHARS = BASE_64_CHARS;
+Base64.BASE_64_VALS = BASE_64_VALS;
+
 
 Base64.encode = function (array) {
 
@@ -142,3 +146,6 @@ Base64.decode = function (str) {
   }
   return arr;
 };
+
+module.exports = Base64;
+

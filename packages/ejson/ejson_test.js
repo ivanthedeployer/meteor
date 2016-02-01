@@ -1,3 +1,13 @@
+require('strict-mode')(function () {
+
+
+var Tinytest = require('meteor-standalone-npm-tinytest');
+var EJSON = require('./ejson.js');
+var EJSONTest = EJSON.EJSONTest;
+require('./custom_models_for_tests.js')(EJSON, EJSONTest);
+var _ = require('underscore');
+
+
 Tinytest.add("ejson - keyOrderSensitive", function (test) {
   test.isTrue(EJSON.equals({
     a: {b: 1, c: 2},
@@ -212,6 +222,8 @@ Tinytest.add("ejson - custom types", function (test) {
   testCustomObject( {address: a} );
   // Test that difference is detected even if they
   // have similar toJSONValue results:
+  // FAILS IN NPM VERSION
+
   var nakedA = {city: 'Montreal', state: 'Quebec'};
   test.notEqual(nakedA, a);
   test.notEqual(a, nakedA);
@@ -230,3 +242,8 @@ Tinytest.add("ejson - custom types", function (test) {
   clone.address.city = 'Sherbrooke';
   test.notEqual( obj, clone );
 });
+
+Tinytest.runNpm();
+
+});
+
