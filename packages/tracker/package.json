@@ -1,6 +1,6 @@
 {
   "name": "meteor-standalone-tracker",
-  "version": "1.0.95",
+  "version": "1.0.97",
   "description": "NPM package for Meteor group's Tracker package",
   "main": "tracker.js",
   "scripts": {

@@ -16,6 +16,10 @@ Meteor._debug = function(s){console.debug(s);};
 // The client has no ability to yield, so noYieldsAllowed is a noop.
 //
 
+Meteor.is_server() {
+   return ! (typeof window != 'undefined' && window.document);
+}
+
 Meteor._noYieldsAllowed = function (f) {
   return f();
 };

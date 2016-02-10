@@ -44,10 +44,12 @@ var _debugFunc = function () {
   // on some browser we come across, like it was on IE 7).
   //
   // Lazy evaluation because `Meteor` does not exist right away.(??)
+  /*
   return (typeof Meteor !== "undefined" ? Meteor._debug :
-          ((typeof console !== "undefined") && console.error ?
+    */
+  return ((typeof console !== "undefined") && console.error ?
            function () { console.error.apply(console, arguments); } :
-           function () {}));
+           function () {});
 };
 
 var _maybeSuppressMoreLogs = function (messagesLength) {
@@ -55,11 +57,13 @@ var _maybeSuppressMoreLogs = function (messagesLength) {
   // printed errors. Since the current implementation of _throwOrLog can log
   // multiple separate log messages, suppress all of them if at least one suppress
   // is expected as we still want them to count as one.
+  /*
   if (typeof Meteor !== "undefined") {
     if (Meteor._suppressed_log_expected()) {
       Meteor._suppress_log(messagesLength - 1);
     }
   }
+  */
 };
 
 var _throwOrLog = function (from, e) {
@@ -90,18 +94,20 @@ var _throwOrLog = function (from, e) {
 // no-op). This has the benefit of not adding an unnecessary stack
 // frame on the client.
 var withNoYieldsAllowed = function (f) {
+  /*
   if ((typeof Meteor === 'undefined') || Meteor.isClient) {
+  */
     return f;
+  /*
   } else {
     return function () {
       var args = arguments;
-      // No-op in NPM anyway
-      //Meteor._noYieldsAllowed(function () {
+      Meteor._noYieldsAllowed(function () {
         f.apply(null, args);
-      //});
-
+      });
     };
   }
+  */
 };
 
 var nextId = 1;
@@ -128,10 +134,12 @@ var afterFlushCallbacks = [];
 var requireFlush = function () {
   if (! willFlush) {
     // We want this code to work without Meteor, see debugFunc above
+    /*
     if (typeof Meteor !== "undefined")
       Meteor._setImmediate(Tracker._runFlush);
     else
-      setTimeout(Tracker._runFlush, 0);
+      */
+    setTimeout(Tracker._runFlush, 0);
     willFlush = true;
   }
 };
