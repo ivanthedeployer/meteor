@@ -16,9 +16,14 @@ Meteor._debug = function(s){console.debug(s);};
 // The client has no ability to yield, so noYieldsAllowed is a noop.
 //
 
-Meteor.is_server() {
-   return ! (typeof window != 'undefined' && window.document);
+Meteor.isServer = function (){
+  return false;
+  /*
+  return ! (typeof window != 'undefined' && window.document);
+  */
 }
+
+Meteor.is_server = Meteor.isServer;
 
 Meteor._noYieldsAllowed = function (f) {
   return f();
@@ -353,8 +358,10 @@ _.extend(Meteor, {
 });
 
 // from helpers.js
+/*
 if (Meteor.isServer)
   var Future = Npm.require('fibers/future');
+*/
 
 if (typeof __meteor_runtime_config__ === 'object' &&
     __meteor_runtime_config__.meteorRelease) {

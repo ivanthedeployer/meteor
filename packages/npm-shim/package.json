@@ -1,6 +1,6 @@
 {
   "name": "meteor-standalone-npm-shim",
-  "version": "0.0.51",
+  "version": "0.0.53",
   "description": "A shim for core Meteor packages so they can be used standalone with NPM",
   "main": "npm-shim.js",
   "scripts": {

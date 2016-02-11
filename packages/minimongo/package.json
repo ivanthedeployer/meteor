@@ -1,6 +1,6 @@
 {
   "name": "meteor-standalone-minimongo",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "Standalone version of Meteor group's Minimongo package for NPM",
   "main": "minimongo.js",
   "scripts": {
